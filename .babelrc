@@ -6,10 +6,5 @@
       }
     }]
   ],
-  "plugins": ["transform-react-jsx"],
-  "env": {
-    "production": {
-      "plugins": ["transform-react-constant-elements"]
-    }
-  }
+  "plugins": ["transform-react-jsx","transform-es2015-block-scoping"]
 }
