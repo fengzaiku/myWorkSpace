@@ -6,7 +6,6 @@ import ReactSwipe from 'react-swipe'
 class Recommend extends Component {
     constructor(props,context){
         super(props)
-        // this.store=this.context.store;
         this.store=context.store;
     }
     componentDidMount() {

@@ -9,9 +9,9 @@ const mapStateToProps = (state, ownProps) => {
         RecommendDate:state.Recommend.recommendDate
     }
 }
-console.log(123123)
+
 const mapDispatchToProps = (dispatch, ownProps) => {
-    console.log(123123)
+
     return {
         getSongList: () =>dispatch(GetDate.getSongList())
     }

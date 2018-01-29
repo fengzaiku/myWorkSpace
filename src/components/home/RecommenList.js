@@ -24,7 +24,7 @@ class RecommentList extends Component {
                     {
                         recommendList.map(function(item,index){
                             return (
-                                <li key={index} onClick={(e) => $this.handleClick(item.specialid,e)}>
+                                <li key={index} onTouchEnd={(e) => $this.handleClick(item.specialid,e)}>
                                     <figure className={RecommentListSty.figure}>
                                         <p> 
                                             <img src={item.user_avatar} title={item.intro}/>
