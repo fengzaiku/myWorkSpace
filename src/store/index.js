@@ -1,12 +1,28 @@
-import {combineReducers} from 'redux';
-export default combineReducers({
-    albums:(state = {}, action) => {
-        switch (action.type) {
-            case actionTypes.MUSIC_UPDATE:
-                return action.data;
-                break;
-            default:
-                return state
-        }
-    }
-})
+import { createStore, applyMiddleware,combineReducers,compose} from 'redux'
+import thunk from 'redux-thunk'
+import reducers from '../reducers/index'
+
+let middleware = [thunk];
+
+// let finalCreateStore;
+let finalCreateStore =createStore(
+    reducers,
+    applyMiddleware(thunk)
+);
+
+// if (process.env.NODE_ENV === 'production') {
+//     finalCreateStore = applyMiddleware(...middleware)(createStore);
+//   } else {
+//     finalCreateStore = compose(
+//       applyMiddleware(...middleware),
+//       createStore
+//     );
+//   }
+export default  finalCreateStore
+// export default  finalCreateStore(reducers)
+
+
+
+
+
+

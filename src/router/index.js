@@ -1,15 +1,25 @@
-import React from 'react';  
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import Home from '../components/home/index';
 
+// import Home from '../components/home/index';
+import Home from '../container/homelogic/index';
+import Recommend from '../container/homelogic/recommend'
 
-const Routes = () => (
-    <div className="app">
-        <Router>
-            <Switch>
-                <Route path="/" exact component={Home}/>
-            </Switch>
-        </Router>
-    </div>
-);
-export default Routes;
+const routes = [
+    { path: '/',
+      component: Home,
+      routes: [
+        { path: '/home',
+          component:Recommend
+        },
+        { path: '/newSong',
+          // component: Address1
+        },
+        { path: '/rank',
+          // component: Address2
+        },
+        { path: '/artist',
+          // component: Address3
+        }
+      ]
+    }
+  ]
+export default routes;

@@ -22,7 +22,7 @@ module.exports={
 		},
 		{
 	        test: /\.css$/,
-	        loader: "style-loader!css-loader?modules"
+	        loader: "style-loader!css-loader"
       	},
 		{
 			test: /\.less$/,
@@ -32,6 +32,7 @@ module.exports={
 					use:[
 						{
 							 loader: 'css-loader',
+							 exclude:'/src/assets/styleSheet/comman/',
 							 options: {
 							 	modules: true, 
 							 	localIdentName:'[local][hash:7]'
@@ -53,18 +54,39 @@ module.exports={
 					'postcss-loader',
 					'less-loader'
 	      		]
-		},
-		{
-			test: /\.(png|jpe?g|gif|svg)$/i,
-			use: ['file-loader?name=image/[hash].[ext]?']
-		}
+			},
+			// {
+			// 	test: /\.(png|jpe?g|gif|svg)$/i,
+			// 	use: ['file-loader?name=image/[hash].[ext]?']
+			// },
+			{
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+          // name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+          // name: utils.assetsPath('media/[name].[hash:7].[ext]')
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+          // name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
+      }
 	  ]
 	},
  	resolve: {
-        extensions: [".js", ".json", ".jsx", ".css", ".less"],
-        alias: {
-	      '@':path.resolve(__dirname, './src')
-	    }
+        extensions: [".js", ".json", ".jsx", ".css", ".less"]
     },	
 	devtool: 'source-map',
 	plugins:[
@@ -82,6 +104,7 @@ module.exports={
 		port: 9000,
 		open: true,
 		inline: true,
+		openPage:"home",
 		contentBase: "./src",//本地服务器所加载的页面所在的目录
 		historyApiFallback: true,//不跳转
 		// 设置代理
