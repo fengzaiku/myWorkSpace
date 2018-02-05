@@ -12,15 +12,15 @@ class NavHeader extends Component {
                     text:"个性推荐"
                 },  
                 {
-                    path:'/newSong',
+                    path:'/home/newSong',
                     text:"新歌"
                 },  
                 {
-                    path:'/rank',
+                    path:'/home/rank',
                     text:"排行榜"
                 },  
                 {
-                    path:'/artist',
+                    path:'/home/artist',
                     text:"歌手"
                 }
             ]

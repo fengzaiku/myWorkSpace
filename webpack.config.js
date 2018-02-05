@@ -7,7 +7,8 @@ module.exports={
 	entry:'./src/app.js',
 	output:{
 		path:path.resolve(__dirname, './build'),
-		filename: "bundle.js"
+		filename: '[name].js',
+    chunkFilename: '[name][chunkhash].js'
 	},
 	module: {
 	  rules: [
@@ -90,13 +91,22 @@ module.exports={
     },	
 	devtool: 'source-map',
 	plugins:[
-		new HtmlWebpackPlugin({
-			template: 'index.html'
-		}),
 		new ExtractTextPlugin({
 			filename: "css/style.[hash].css",
 			disable: false,
 			allChunks: true
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
+			chunks: ['main'],
+			minChunks: 1 // 提取所有entry共同依赖的模块
+		}),
+		new HtmlWebpackPlugin({
+			template: 'index.html',
+			inject: true,
+      // hash: true,
+      // cache: true,
+      chunks: ['main','vendors']
 		})
 	],
 	devServer: {

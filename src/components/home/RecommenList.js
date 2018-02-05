@@ -3,15 +3,13 @@ import RecommentListSty from "../../assets/styleSheet/home/recommentList"
 class RecommentList extends Component {
     constructor(props){
         super(props);
-        // this.handleClick=this.handleClick.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        console.log(this.props)
-        // this.store=this.context.store;
     }
     componentWillMount(){
         this.props.getSongList();
     }
-    handleClick(id){
+    handleClick(id,ev){
+        ev.preventDefault();
         this.props.history.push('/album/'+id);
     }
     render(){
@@ -24,7 +22,7 @@ class RecommentList extends Component {
                     {
                         recommendList.map(function(item,index){
                             return (
-                                <li key={index} onTouchEnd={(e) => $this.handleClick(item.specialid,e)}>
+                                <li key={index} onClick={(e) => $this.handleClick(item.specialid,e)}>
                                     <figure className={RecommentListSty.figure}>
                                         <p> 
                                             <img src={item.user_avatar} title={item.intro}/>

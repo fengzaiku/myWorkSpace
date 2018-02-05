@@ -12,7 +12,7 @@ class Recommend extends Component {
        
       }    
     componentWillMount(){
-        this.props.getBannerList()
+       
     }
     render(){
         
