@@ -7,8 +7,9 @@ module.exports={
 	entry:'./src/app.js',
 	output:{
 		path:path.resolve(__dirname, './build'),
-		filename: '[name].js',
-    chunkFilename: '[name][chunkhash].js'
+		filename: 'javascript/[name].[hash:5].js',
+		publicPath:"/"
+    // chunkFilename: '[name][chunkhash].js'
 	},
 	module: {
 	  rules: [
@@ -123,6 +124,11 @@ module.exports={
 				target: "http://m.kugou.com",
 				changeOrigin: true,
 				pathRewrite: {"^/kugou" : ""}
+			},
+			"/yy_kugou": {
+				target: "http://www.kugou.com/yy/",
+				changeOrigin: true,
+				pathRewrite: {"^/yy_kugou" : ""}
 			},
 			"/ad": {
 				target: "http://ads.service.kugou.com",

@@ -1,0 +1,78 @@
+.singerBox{
+    width: 100%;
+    padding-top:50px;
+    position: relative;
+}
+.playAll{
+    width: 100%;
+    padding:13px;
+    color:#e9203d;
+    border-bottom: 1px solid #e9203d;
+    display: flex;
+    font-size: 14px;
+    line-height: 1.5;
+    justify-content: space-between;
+    >i{
+        color:#e9203d;
+    }
+}
+.album_box{
+    padding:0 10px 10px;
+    width: 100%;
+}
+
+.album_list{
+    padding:10px 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3{
+        font-size: 16px;
+        // color:#888;
+    }
+    p{
+        padding-top:5px;
+        font-size: 12px;
+        color:#666;
+    }
+}
+.blurImg{
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left:0;
+    top:0;
+    filter: blur(60px);
+}
+
+.info{
+    display: flex;
+    width: 100%;
+    padding:10px;
+    justify-content:space-between;
+    align-items:center;
+    >img{
+        width:8.5rem;
+        display: block;
+    }
+}
+.info_intro{
+    line-height: 1.5;
+    padding-left:10px;
+    // color:#999;
+    >p{
+        font-size: 14px;
+    }
+    >time{
+        display: block;
+        margin-top:5px;
+        font-size: 12px;
+    }
+}
+.info,.playAll,.album_box{
+    position: relative;
+    z-index: 1;
+}
+

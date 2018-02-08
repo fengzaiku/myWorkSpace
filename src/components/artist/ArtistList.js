@@ -10,11 +10,17 @@ class ArtistList extends Component {
         console.log(this.props)
     }
     componentDidMount(){
-        this.props.artistListInfo(this.props.match.params.id)
-        // artistListInfo
+        if(!this.props.artistInfo.loaded){
+            this.props.artistListInfo(this.props.match.params.id)
+        }
+        
     }
-    handleClick(id){
-        this.props.history.push("/singer/"+id)
+    handleClick(item){
+        this.props.history.push("/singer/"+item.singerid,{
+            "singerimg":item.imgurl.replace(/\{size\}/,400),
+            "singername":item.singername,
+            "play":true
+        })
     }
     render(){
         const artistInfo=this.props.artistInfo.listInfo || [];
@@ -26,7 +32,7 @@ class ArtistList extends Component {
                     <ul className={ArtistListSty.box}>
                         {
                             artistInfo.map((item,index)=>(
-                                <li key={index} onClick={this.handleClick.bind(this,item.singerid)} className={ArtistListSty.list}>
+                                <li key={index} onClick={this.handleClick.bind(this,item)} className={ArtistListSty.list}>
                                     <figure className={ArtistListSty.listFigure}>
                                         <img src={item.imgurl.replace(/\{size\}/ig,400)}/>
                                         <figcaption>

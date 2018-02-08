@@ -2,6 +2,7 @@ import {withRouter} from "react-router-dom"
 import {connect} from "react-redux"
 import { bindActionCreators } from "redux"
 import ArtistSinger from "../../components/artist/ArtistSinger"
+import { getSingerList } from "../../actions/getDate";
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -10,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        // dispatch:bindActionCreators(,dispatch)
+        singerListinfo:bindActionCreators(getSingerList,dispatch)
     }
 }
 

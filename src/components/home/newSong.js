@@ -11,7 +11,9 @@ class NewSong extends Component {
         this.props.history.push("/play/"+hash)
     }
     render(){
-        const SongList= this.props.match.url=='/home/newSong'? this.props.newSong : {}
+        const SongList=this.props.newSong.date || [{}];
+        console.log(SongList)
+        // const SongList= this.props.match.url=='/home/newSong'? this.props.newSong : {}
         return(
             <ul className={NewSongSty.songBox}>
                {

@@ -1,5 +1,5 @@
 
-
+/*
 import Home from '../container/homelogic/index'
 import Recommend from '../container/homelogic/recommend'
 import NewSong from '../container/homelogic/newSong'
@@ -7,8 +7,9 @@ import Rank from '../container/ranklogic/rank'
 import Artist from '../container/artistlogic/artist'
 import ArtistList from '../container/artistlogic/artistList'
 import ArtistSinger from '../container/artistlogic/artistSinger'
-/*
-
+import RankList from '../container/ranklogic/rankList'
+import Album from '../container/album/album'
+*/
 import React,{Component} from "react"
 const Loading=() =>{
   return(
@@ -23,41 +24,45 @@ const NewSong=Loadable({loader: () => import('../container/homelogic/newSong'),l
 const Rank=Loadable({loader: () => import('../container/ranklogic/rank'),loading:Loading})
 const Artist=Loadable({loader: () => import('../container/artistlogic/artist'),loading:Loading})
 const ArtistList=Loadable({loader: () => import('../container/artistlogic/artistList'),loading:Loading})
-*/
-// import Async from './asyncComponent'
+const ArtistSinger=Loadable({loader: () => import('../container/artistlogic/artistSinger'),loading:Loading})
+const RankList=Loadable({loader: () => import('../container/ranklogic/rankList'),loading:Loading})
+const Album=Loadable({loader: () => import('../container/album/album'),loading:Loading})
+
+import Async from './asyncComponent'
 const routes = [
     { path: '/home',
       component: Home,
-      // component:Async(() => import('../container/homelogic/index')),
       routes: [
         { path: '/home',
           exact:true,
           component:Recommend
-          // component:Async(() => import('../container/homelogic/recommend'))
         },
         { path: '/home/newSong',
           component:NewSong
-          // component:Async(() => import('../container/homelogic/newSong'))
         },
         { path: '/home/rank',
           component:Rank
-          // component:Async(() => import('../container/ranklogic/rank'))
         },
         { path: '/home/artist',
           component:Artist
-          // component:Async(() => import('../container/artistlogic/artist'))
         }
       ]
     },
     {
       path:'/artist/:id',
       component:ArtistList
-      // component:Async(() => import('../container/artistlogic/artistList'))
     },
     {
       path:'/singer/:id',
       component:ArtistSinger
-      // component:Async(() => import('../container/artistlogic/artistList'))
+    },
+    {
+      path:'/ranklist/:id',
+      component:RankList
+    },
+    {
+      path:"/album/:id",
+      component:Album
     }
   ]
 export default routes;

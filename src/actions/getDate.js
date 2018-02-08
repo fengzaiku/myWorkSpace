@@ -2,7 +2,7 @@ import API from "../utils/api"
 import fetch from 'cross-fetch';
 import {combineReducers} from 'redux';
 import * as Type from '../utils/typeapi'
-
+import Cheerio from 'cheerio';
 
 
 const RecommendList=(data) => {
@@ -42,6 +42,24 @@ const ArtistListDate=(data) => {
         date:data
     }
 }
+const SingerListDate=(data) => {
+    return {
+        type:Type.SINGERLISTDATA,
+        date:data
+    }
+}
+const RankListDate=(data) => {
+    return {
+        type:Type.RANKLISTDATA,
+        date:data
+    }
+}
+const AlbumDate=(data) => {
+    return {
+        type:Type.ALBUMLISTDATA,
+        date:data
+    }
+}
 
 
 const getBannerList = () => {
@@ -54,7 +72,7 @@ const getBannerList = () => {
           }
           
           const user = await res.json();
-        
+
           dispatch(BannerdDate(user.banner))
           dispatch(NewSongDate(user.data))
         } catch (err) {
@@ -62,6 +80,7 @@ const getBannerList = () => {
         }
     }
 };
+
 const getSongList = () => {
     return async (dispatch) => {
         try {
@@ -136,6 +155,71 @@ const getArtistList =(id)=>{
     }
 }
 
+const getSingerList=(id)=>{
+    return async (dispatch)=>{
+        try {
+            let res=await fetch(`/yy_kugou/singer/home/${id}.html`);
+            
+            if(res.status>400){
+                throw new Error("获取歌手列表失败！");
+            }
+
+            let user= await res.text();
+            const $ = Cheerio.load(user);
+            const list = $('#song_container').children();
+            let userDate=[];
+
+            list.each((index,item)=>{
+                let arr=$(item).find("input.song_hid").val().split("|");
+                userDate.push({"filename":arr[0],"hash":arr[1],"id":arr[2]})
+            })
+          dispatch(SingerListDate(userDate))
+        } 
+        catch (error) {
+            
+        }
+    }
+}
+
+const getListRankDate=(id)=>{
+    return async (dispatch)=>{
+        try {
+            let res=await fetch(`/kugou/${API.rankid}?rankid=${id}&page=1&json=true`);
+            if(res,status>400){
+                throw new Error("歌曲排行获取失败！")
+            }
+
+            let user=await res.json();
+
+            console.log(user)
+            dispatch(RankListDate(user))
+        } 
+        catch (error) {
+            
+        }
+    }
+}
+
+const getAlbumDate=(id) => {
+    return async (dispatch) =>{
+        try {
+            let res= await fetch(`/kugou/${API.song_playlist}/${id}?json=true`);
+            
+            if(res.status>400){
+                throw new Error("获取热播歌曲失败！")
+            }  
+
+            let user= await res.json();
+
+            console.log(user)
+            dispatch(AlbumDate(user))
+        } 
+        catch (error) {
+            
+        }
+    }
+}
+
 // const getSongList = () => {
 //     return (dispatch)=>{
 //         fetch(`/kugou/${API.new_song}`)
@@ -162,7 +246,10 @@ export {
     getSongList,
     getRankList,
     getArtist,
-    getArtistList
+    getArtistList,
+    getSingerList,
+    getListRankDate,
+    getAlbumDate
 }
 // export default combineReducers({
 //     getSearchHot,

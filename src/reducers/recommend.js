@@ -38,10 +38,29 @@ const BannerDate=(state=[],action) => {
             return state;
     }
 }
-const NewSongDate=(state=[],action) => {
+
+
+const songList={
+    items:{
+        page:0,
+        loaded:false,
+        date:[]
+    }
+}
+const NewSongDate=(state=songList.items,action) => {
     switch(action.type){
         case Type.NEWSONGDATA:
-            return action.date;
+            return Object.assign({},state,{
+                page:1,
+                loaded:true,
+                date:action.date
+            })
+        case Type.SINGERLISTDATA:
+            return Object.assign({},state,{
+                    page:1,
+                    loaded:true,
+                    date:action.date
+           })
         default:
             return state;
     }
