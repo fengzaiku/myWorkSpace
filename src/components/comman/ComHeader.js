@@ -9,7 +9,7 @@ class Header extends Component{
     }
     render(){
         return(
-            <header className={ComHeaderSty.header}>
+            <header className={ComHeaderSty.header} style={this.props.style ? this.props.style :null}>
                 <i className={ComHeaderSty.returnIcon} onClick={this.handleClick.bind(this)}>&#xe65a;</i>
                 <span>{this.props.title}</span>
             </header>

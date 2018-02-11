@@ -2,8 +2,9 @@ import API from "../utils/api"
 import fetch from 'cross-fetch';
 import {combineReducers} from 'redux';
 import * as Type from '../utils/typeapi'
-import Cheerio from 'cheerio';
-
+import {parseLyric} from '../utils/tools'
+import Cheerio from 'cheerio'
+// import {}
 
 const RecommendList=(data) => {
     return {
@@ -60,7 +61,39 @@ const AlbumDate=(data) => {
         date:data
     }
 }
+const addMusic=(data) => {
+    return {
+        type:Type.ADDMUSIC,
+        date:data
+    }
+}
 
+
+const getMusicInfo=(id)=>{
+    return async (dispatch) =>{
+        try {
+            let res_song=await fetch(`/kugou/${API.song_detail}?cmd=playInfo&hash=${id}`);
+            if(res_song.status>400){
+                throw new Error("播放列表请求失败！")
+            }
+            let res_song_json = await res_song.json()
+        
+            let res_lyrics=await fetch(`/kugou/${API.song_lyrics}?cmd=100&hash=${id}&timelength=${res_song_json.timeLength}`);
+        
+            if(res_lyrics.status>400){
+                throw new Error("播放列表请求失败！")
+            }
+            let res_lyrics_detail=await res_lyrics.text();
+           
+            let musicObj = {"song": res_song_json,"lyrics": parseLyric(res_lyrics_detail)};
+            console.log(musicObj)
+            dispatch(addMusic(musicObj))
+        } 
+        catch (error) {
+            
+        }
+    }
+}
 
 const getBannerList = () => {
     return async (dispatch) => {
@@ -249,7 +282,8 @@ export {
     getArtistList,
     getSingerList,
     getListRankDate,
-    getAlbumDate
+    getAlbumDate,
+    getMusicInfo
 }
 // export default combineReducers({
 //     getSearchHot,

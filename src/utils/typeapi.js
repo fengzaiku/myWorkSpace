@@ -16,6 +16,8 @@ export const SINGERLISTDATA="SINGERLIST_DATA";
 export const RANKLISTDATA="RANKLIST_DATA";
 // 热歌排行列表
 export const ALBUMLISTDATA="ALBUMLIST_DATA";
+// 添加播放列表
+export const ADDMUSIC="ADDMUSIC_DATA";
 
 
 

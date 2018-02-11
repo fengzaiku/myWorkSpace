@@ -2,6 +2,7 @@ import React,{Component} from "react"
 import { renderRoutes } from 'react-router-config'
 import {Router, Route,Switch} from 'react-router-dom'
 import '../assets/styleSheet/comman/';
+import '../assets/fonts/iconfont.css'
 import Routes from './router'
 
 
