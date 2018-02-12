@@ -67,6 +67,12 @@ const addMusic=(data) => {
         date:data
     }
 }
+const controlMusic=(data) => {
+    return {
+        type:Type.CONTROLMUSIC,
+        date:data
+    }
+}
 
 
 const getMusicInfo=(id)=>{
@@ -283,7 +289,8 @@ export {
     getSingerList,
     getListRankDate,
     getAlbumDate,
-    getMusicInfo
+    getMusicInfo,
+    controlMusic
 }
 // export default combineReducers({
 //     getSearchHot,

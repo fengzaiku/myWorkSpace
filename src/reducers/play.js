@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {ADDMUSIC} from '../utils/typeapi'
+import {ADDMUSIC,CONTROLMUSIC} from '../utils/typeapi'
 
 const musicList=function(state=[],action){
     
@@ -23,9 +23,19 @@ const musicList=function(state=[],action){
     }
 }
  
-
+const control=function(state={playing:false},action){
+    console.log("寄来了"+action.type+"+"+CONTROLMUSIC)  
+    switch(action.type){
+        case CONTROLMUSIC:
+        console.log("看看我"+action)
+            return Object.assign({},state,action.date)
+        default:
+            return state;
+    }
+}
 
 
 export default combineReducers({
-    musicList
+    musicList,
+    control
 })

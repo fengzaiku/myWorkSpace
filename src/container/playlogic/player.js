@@ -1,14 +1,15 @@
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {withRouter} from "react-router-dom"
 // import * as musicInfoAction from '../../actions/music';
 import Player from '../../components/play/Player';
+import { getMusicInfo } from '../../actions/getDate'
 
 const mapStateToProps = (state) => {
     return {
-        // musicList: state.musicList,
+        musicList:state.Play.musicList,
         // music: state.music,
-        // control:state.control,
+        control:state.Play.control,
         // progress:state.progress,
         // audio:state.audio,
         // lyricsUpdate:state.lyricsUpdate,
@@ -18,7 +19,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        // musicInfoActions: bindActionCreators(musicInfoAction, dispatch)
+        musicInfo: bindActionCreators(getMusicInfo, dispatch)
     }
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Player);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Player));

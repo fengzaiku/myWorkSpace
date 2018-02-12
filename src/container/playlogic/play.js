@@ -6,19 +6,30 @@ import {bindActionCreators} from 'redux'
 import {withRouter} from 'react-router-dom'
 // import * as musicInfoAction from '../../actions/music';
 import Play from '../../components/play/Play'
-import { getMusicInfo } from '../../actions/getDate';
+import { getMusicInfo,controlMusic } from '../../actions/getDate'
+// import * as musicActions from '../../actions/getDate'
 
 const mapStateToProps = (state) => {
-    console.log(state.Play.musicList)
+    console.log(state)
     // return state;
     // console.log(state)
     return {
-        musicList:state.Play.musicList
+        musicList:state.Play.musicList,
+        control:state.Play.control
     };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch,ownProps) => {
     return {
-        musicInfo: bindActionCreators(getMusicInfo, dispatch)
+        // musicInfoAction: bindActionCreators(musicActions, dispatch)
+        musicInfo: bindActionCreators(getMusicInfo, dispatch),
+        controlMusic:bindActionCreators(controlMusic, dispatch)
     }
 };
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Play));
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//     return {
+//         dispatch1: () => {
+//             dispatch(actionCreator)
+//         }
+//     }
+// }
+export default withRouter(withRouter(connect(mapStateToProps, mapDispatchToProps)(Play)));

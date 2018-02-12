@@ -34,7 +34,7 @@ export default class Player extends Component {
         //     progress: localStore.getItem('currentVolume') ? localStore.getItem('currentVolume') * 100 + '%' : this.props.volumeObj.volume * 100 + '%', // 声音进度条进度
         // };
         // this.onChange = this.onChange.bind(this);
-        // this.playPause = this.playPause.bind(this);
+        this.playPause = this.playPause.bind(this);
         // this.showMusicList = this.showMusicList.bind(this);
         this.getCurrentSong = this.getCurrentSong.bind(this);
         // this.playPrev = this.playPrev.bind(this);
@@ -52,6 +52,7 @@ export default class Player extends Component {
         const hash = this.props.match.params.id;
         if (hash) {
             this.props.musicInfo(hash);
+            this.props.controlMusic({playing:true});
         }
 
 
@@ -64,7 +65,8 @@ export default class Player extends Component {
     }
 
     playPause() {
-        // this.props.musicInfoActions.control({playing: !this.props.control.playing});
+        console.log(this.props)
+        this.props.controlMusic({playing:!this.props.control.playing});
     }
 
     onChange(e) {
@@ -212,7 +214,7 @@ export default class Player extends Component {
     }
 
     render() {
-        
+        console.log(this.props.control)
         if (this.getCurrentSong()) {
         // if (this.props.spin && this.getCurrentSong()) {
             const currentSong = this.getCurrentSong().song;
@@ -257,7 +259,7 @@ export default class Player extends Component {
                                    }} className={PlaySty.swiperOption}>
                                     <div className={PlaySty.slide}>
                                         <div className={PlaySty.componentsAlbum}>
-                                            <div className={`${this.props.control ? PlaySty.playing : PlaySty.paused} ${PlaySty.albumPic}`}
+                                            <div className={`${this.props.control.playing ? PlaySty.playing : PlaySty.paused} ${PlaySty.albumPic}`}
                                                  style={{background: `url(${currentSong.imgUrl.replace(/\{size\}/g, 400)}) center center`, backgroundSize: 'cover'}}>
                                             </div>
                                         </div>
@@ -292,7 +294,7 @@ export default class Player extends Component {
                                     </div>
                                     <div className={PlaySty.playerBtn}>
                                         <i className={PlaySty.colorSize+" icon-zuobofang"}></i>
-                                        <i className={(this.props.control ? 'icon-caozuo-bofang-zanting ' : 'icon-kaishi ')+PlaySty.colorSize}></i>
+                                        <i className={(this.props.control.playing ? 'icon-caozuo-bofang-zanting ' : 'icon-kaishi ')+PlaySty.colorSize} onClick={this.playPause}></i>
                                         <i className={PlaySty.colorSize+" icon-youbofang"}></i>
                                         <i className={PlaySty.colorSize+" icon-gengduo1"}></i>
                                         {/* <i className="icon-prev" onClick={this.playPrev}></i>

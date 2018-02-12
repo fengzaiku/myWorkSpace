@@ -4,6 +4,8 @@ import {Router, Route,Switch} from 'react-router-dom'
 import '../assets/styleSheet/comman/';
 import '../assets/fonts/iconfont.css'
 import Routes from './router'
+import Player from "../container/playlogic/player"
+
 
 
 class RouteWithSubRoutes extends Component {
@@ -16,9 +18,12 @@ class RouteWithSubRoutes extends Component {
   }
   render(){
     return(
-      <Switch>
-        {renderRoutes(Routes)}
-      </Switch>
+      <div id="pageRoot">
+        <Player/>      
+        <Switch>
+          {renderRoutes(Routes)}
+        </Switch>
+      </div>
     )
   }
 }

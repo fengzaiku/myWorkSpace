@@ -18,6 +18,8 @@ export const RANKLISTDATA="RANKLIST_DATA";
 export const ALBUMLISTDATA="ALBUMLIST_DATA";
 // 添加播放列表
 export const ADDMUSIC="ADDMUSIC_DATA";
+// 控制播放
+export const CONTROLMUSIC="CONTROLMUSIC_DATA";
 
 
 
