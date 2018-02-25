@@ -12,7 +12,7 @@ class SearchHeader extends Component {
 	render(){
 		return(
 			<article className={SearchHeadSty.article}>
-				<header className={SearchHeadSty.login}> <Link to="/user/login"><i className={SearchHeadSty.loginIcon}>&#xe630;</i> </Link></header>
+				<header className={SearchHeadSty.login}> <Link to="/login"><i className={SearchHeadSty.loginIcon}>&#xe630;</i> </Link></header>
                 <section className={SearchHeadSty.searchBar}>
                     <input type="text" />
                 </section>

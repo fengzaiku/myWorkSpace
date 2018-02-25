@@ -28,6 +28,7 @@ const ArtistSinger=Loadable({loader: () => import('../container/artistlogic/arti
 const RankList=Loadable({loader: () => import('../container/ranklogic/rankList'),loading:Loading})
 const Album=Loadable({loader: () => import('../container/album/album'),loading:Loading})
 const Play=Loadable({loader: () => import('../container/playlogic/play'),loading:Loading})
+const Login=Loadable({loader: () => import('../container/loginlogic/login'),loading:Loading})
 
 // import Async from './asyncComponent'
 const routes = [
@@ -68,6 +69,10 @@ const routes = [
     {
       path:"/play/:id",
       component:Play
+    },
+    {
+      path:"/login",
+      component:Login
     }
   ]
 export default routes;
