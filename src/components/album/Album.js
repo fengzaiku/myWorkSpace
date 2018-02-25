@@ -18,7 +18,7 @@ class Album extends Component{
         // RankList
     }
     handleClick(hash){
-
+        this.props.history.push("/play/"+hash)
     }
     render(){
         console.log(this.props)
@@ -46,7 +46,6 @@ class Album extends Component{
                         </div>
                         <ul className={AlbumSty.album_box}>
                             { 
-                                listInfo.length > 0 ? 
                                     listInfo.map((item,index) => (
                                         <li key={index} onClick={this.handleClick.bind(this,item.hash)} className={AlbumSty.album_list}>
                                             <div>
@@ -55,14 +54,7 @@ class Album extends Component{
                                             </div>
                                             <i>&#xe62d;</i>
                                         </li>)
-                                    ) :                      
-                                    <li onClick={this.handleClick.bind(this,listInfo.hash)} className={AlbumSty.album_list}>
-                                        <div>
-                                            <h3>{listInfo.filename}</h3>
-                                            <p>{listInfo.remark}</p>
-                                        </div>
-                                        <i>&#xe62d;</i>
-                                    </li>                               
+                                    )                
                             }
                         </ul>
                    </div>

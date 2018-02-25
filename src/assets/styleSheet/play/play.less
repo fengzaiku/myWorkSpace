@@ -132,6 +132,9 @@
 .swiperOption,.slide{
     height: 20rem;
 }
+.swiperOption>div{
+    height: 100%;
+}
 .componentsAlbum{
     display: flex;
     justify-content: center;
@@ -191,7 +194,14 @@
     height: 38px;
     line-height:38px;
     text-align: center;
+   
 }
+// .originUlBox{
+//     position: absolute;
+//     left: 0;
+//     top:0;
+//     width: 100%;
+// }
 .line{
     color:#fff;
 }
@@ -200,7 +210,10 @@
 }
 .originLyric{
     height:100%;
-    overflow-y: auto;
+    >div{
+        touch-action: none;
+    }
+    // overflow-y: auto;
 }
 
 

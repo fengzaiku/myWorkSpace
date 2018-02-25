@@ -18,8 +18,16 @@ export const RANKLISTDATA="RANKLIST_DATA";
 export const ALBUMLISTDATA="ALBUMLIST_DATA";
 // 添加播放列表
 export const ADDMUSIC="ADDMUSIC_DATA";
+// 删除播放列表
+export const REMOVEMUSIC="REMOVEMUSIC_DATA";
+// 清除播放列表
+export const CLEARMUSIC="CLEARMUSIC_DATA";
 // 控制播放
 export const CONTROLMUSIC="CONTROLMUSIC_DATA";
+// 当前播放音乐索引
+export const CURRENTMUSICINDEX="CURRENTMUSICINDEX";
+// 更新当前音乐进度
+export const UPDATEPROGRESS="UPDATEPROGRESSMUSIC_DATA";
 
 
 

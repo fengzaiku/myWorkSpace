@@ -67,9 +67,32 @@ const addMusic=(data) => {
         date:data
     }
 }
+const removeMusic=(data) => {
+    return {
+        type:Type.REMOVEMUSIC,
+        date:data
+    }
+}
+const clearMusic=() => {
+    return {
+        type:Type.CLEARMUSIC
+    }
+}
 const controlMusic=(data) => {
     return {
         type:Type.CONTROLMUSIC,
+        date:data
+    }
+}
+const setCurMusicIndex=(data) => {
+    return {
+        type:Type.CURRENTMUSICINDEX,
+        date:data
+    }
+}
+const updateMusicProgress=(data) => {
+    return {
+        type:Type.UPDATEPROGRESS,
         date:data
     }
 }
@@ -290,7 +313,11 @@ export {
     getListRankDate,
     getAlbumDate,
     getMusicInfo,
-    controlMusic
+    controlMusic,
+    removeMusic,
+    clearMusic,
+    setCurMusicIndex,
+    updateMusicProgress
 }
 // export default combineReducers({
 //     getSearchHot,

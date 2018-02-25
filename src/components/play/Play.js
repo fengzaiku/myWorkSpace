@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import ReactSwipe from 'react-swipe'
+import ReactIScroll from 'react-iscroll';
+import iScroll from 'iscroll'
+// var iScroll = require('iscroll');
 // import 'babel-polyfill';
 // import classnames from 'classnames';
 // import Header from '../../components/Common/Header';
@@ -8,7 +11,8 @@ import ReactSwipe from 'react-swipe'
 // import Slider from 'react-slick';
 import PlaySty from '../../assets/styleSheet/play/play'
 import ComHeader from "../../container/command/comHeader"
-// import MusicList from '../../containers/Home/MusicList';
+import MusicList from "../../container/playlogic/musicList"
+
 // import Loading from '../../components/Common/Loading';
 // import noData from '../../static/images/nodata.png';
 // import svg1 from '../../static/css/svg/svg-1.svg';
@@ -26,6 +30,9 @@ export default class Player extends Component {
         // }
     constructor(props) {
         super(props);
+        this.state={
+            musicListShow:false
+        }
         // this.state = {
         //     loaded: false,
         //     modal: false, // 弹层默认不显示
@@ -35,10 +42,10 @@ export default class Player extends Component {
         // };
         // this.onChange = this.onChange.bind(this);
         this.playPause = this.playPause.bind(this);
-        // this.showMusicList = this.showMusicList.bind(this);
+        this.showMusicList = this.showMusicList.bind(this);
         this.getCurrentSong = this.getCurrentSong.bind(this);
-        // this.playPrev = this.playPrev.bind(this);
-        // this.playNext = this.playNext.bind(this);
+        this.playPrev = this.playPrev.bind(this);
+        this.playNext = this.playNext.bind(this);
         // this.openDot = this.openDot.bind(this);
         // this.closeDot = this.closeDot.bind(this);
         // this.setSVG = this.setSVG.bind(this);
@@ -63,9 +70,8 @@ export default class Player extends Component {
         //     this.props.musicInfoActions.control({playing: true});
         // }
     }
-
+    
     playPause() {
-        console.log(this.props)
         this.props.controlMusic({playing:!this.props.control.playing});
     }
 
@@ -75,11 +81,10 @@ export default class Player extends Component {
     }
 
     showMusicList() {
-        // this.setState({modal: true});
+        this.setState({musicListShow: true});
     }
-
-    changeShowModal(e) {
-        // this.setState({modal: e.modal});
+    hideMusicList(date) {
+        this.setState({musicListShow: date.show});
     }
 
     getCurrentSong() {
@@ -92,44 +97,26 @@ export default class Player extends Component {
                     currentSong = ele;
                 }
             })
+            // this.setState({songLyrics:currentSong.lyrics})
         }
+        
         return currentSong;
     }
 
     playPrev() {
-        // const hash = this.props.music.hash;
-        // const musicList = this.props.musicList;
-        // let index = 0;
-        // if (musicList.length > 0) {
-        //     for (let i = 0; i < musicList.length; i++) {
-        //         if (musicList[i].song.hash === hash) {
-        //             index = i;
-        //         }
-        //     }
-        // }
-        // let currentIndex = index - 1 < 0 ? musicList.length - 1 : --index;
-        // const currentSong = musicList[currentIndex].song;
-        // this.props.musicInfoActions.getMusic({hash: currentSong.hash});
-        // this.props.history.replace('#' + currentSong.hash);
-        // this.props.musicInfoActions.fetchMusic(currentSong.hash);
+        const musicList = this.props.musicList;
+        let curIndex=this.props.currentPlayIndex.playIndex;
+        let currentIndex = curIndex === 0 ? musicList.length - 1 : curIndex - 1;
+        this.props.history.replace("/play/"+musicList[currentIndex].song.hash)
+        this.props.setCurMusicIndex({playIndex:currentIndex})
     }
 
     playNext() {
-        // const hash = this.props.music.hash;
-        // const musicList = this.props.musicList;
-        // let index = 0;
-        // if (musicList.length > 0) {
-        //     for (let i = 0; i < musicList.length; i++) {
-        //         if (musicList[i].song.hash === hash) {
-        //             index = i;
-        //         }
-        //     }
-        // }
-        // let currentIndex = index + 1 > musicList.length - 1 ? 0 : ++index;
-        // const currentSong = musicList[currentIndex].song;
-        // this.props.musicInfoActions.getMusic({hash: currentSong.hash});
-        // this.props.history.replace('#' + currentSong.hash);
-        // this.props.musicInfoActions.fetchMusic(currentSong.hash);
+        const musicList = this.props.musicList;
+        let curIndex=this.props.currentPlayIndex.playIndex;
+        let currentIndex = curIndex === musicList.length - 1 ? 0 : curIndex + 1;
+        this.props.history.replace("/play/"+musicList[currentIndex].song.hash)
+        this.props.setCurMusicIndex({playIndex:currentIndex})
     }
 
     openDot() {
@@ -212,15 +199,32 @@ export default class Player extends Component {
     singerInfo(id) {
         // this.props.history.push({pathname: '/singer/info', state: {singerId: id}});
     }
-
+    componentDidUpdate(){
+        const currentSongLyrics = this.getCurrentSong();
+        if(currentSongLyrics){
+            const songLyrics=currentSongLyrics.lyrics;
+            const $this=this;
+            let index=0;
+            for(let i=0;i<songLyrics.length;i++){
+                this.refs[songLyrics[i][0]].style.color="#fff"
+                if(this.props.musicProgress.currentTime >= songLyrics[i][0]){
+                    index=i;
+                }
+            }    
+            if(index){
+                this.refs.iScroll.withIScroll(function(iScroll) {
+                    iScroll.scrollToElement($this.refs[songLyrics[index][0]],500)
+                    $this.refs[songLyrics[index][0]].style.color="#e9203d"
+                })
+            }
+        }
+    }
     render() {
-        console.log(this.props.control)
         if (this.getCurrentSong()) {
         // if (this.props.spin && this.getCurrentSong()) {
             const currentSong = this.getCurrentSong().song;
             const currentSongLyrics = this.getCurrentSong().lyrics;
             // const albumImg = currentSong.imgUrl.replace(/\{size\}/g, 400);
-            // const currentTime = formatTime(this.props.progress.currentTime);
             // const duration = formatTime(localStore.getItem('duration'));
             // const percentage = this.props.progress.percentage;
             // const rangeStyle = percentage * 100 + '%' + ' ' + '100%';
@@ -264,20 +268,23 @@ export default class Player extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="lyric" className={PlaySty.originLyric}>
-                                        <ul 
-                                        // className={PlaySty.originLyric} 
-                                            // style={{transform: 'translateY(-' + this.props.lyricsUpdate.index * 38 + 'px)'}}
-                                            >
-                                            {currentSongLyrics.map((ele, index) => (
-                                                <li key={index} id={`line-${index}`} 
-                                                   className={`${this.props.lyricsUpdate === ele[0] ? PlaySty.lineOn : PlaySty.line} ${PlaySty.lyicsStye}`}>
-                                                   {/* className={`${this.props.lyricsUpdate.time === ele[0] ? PlaySty.lineOn : PlaySty.line} ${PlaySty.lyicsStye}`}> */}
-                                                    {ele[1]}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>                             
+                                    <div className={PlaySty.originLyric}>
+                                        <ReactIScroll iScroll={iScroll} ref="iScroll">
+                                            <ul 
+                                                // className={PlaySty.originUlBox}
+                                            // className={PlaySty.originLyric} 
+                                                // style={{transform: 'translateY(-' + this.props.lyricsUpdate.index * 38 + 'px)'}}
+                                                >
+                                                {currentSongLyrics.map((ele, index) => (
+                                                    <li key={index} id={`line-${ele[0]}`} ref={ele[0]}
+                                                    className={`${PlaySty.line} ${PlaySty.lyicsStye}`}>
+                                                    {/* className={`${this.props.lyricsUpdate.time === ele[0] ? PlaySty.lineOn : PlaySty.line} ${PlaySty.lyicsStye}`}> */}
+                                                        {ele[1]}
+                                                    </li>
+                                                ))}
+                                            </ul>                         
+                                        </ReactIScroll>
+                                    </div> 
                                </ReactSwipe>
                                 <div className={PlaySty.componentsPlayerControl}>
                                     <div className={PlaySty.playerTime}>
@@ -293,13 +300,12 @@ export default class Player extends Component {
                                         </div>
                                     </div>
                                     <div className={PlaySty.playerBtn}>
-                                        <i className={PlaySty.colorSize+" icon-zuobofang"}></i>
+                                        <i className={PlaySty.colorSize+" icon-zuobofang"} onClick={this.playPrev}></i>
                                         <i className={(this.props.control.playing ? 'icon-caozuo-bofang-zanting ' : 'icon-kaishi ')+PlaySty.colorSize} onClick={this.playPause}></i>
-                                        <i className={PlaySty.colorSize+" icon-youbofang"}></i>
-                                        <i className={PlaySty.colorSize+" icon-gengduo1"}></i>
-                                        {/* <i className="icon-prev" onClick={this.playPrev}></i>
+                                        <i className={PlaySty.colorSize+" icon-youbofang"} onClick={this.playNext}></i>
+                                        <i className={PlaySty.colorSize+" icon-gengduo1"} onClick={this.showMusicList}></i>
+                                        {/* 
                                         <i onClick={this.playPause} className={this.props.control.playing ? 'icon-pause' : 'icon-play'}></i>
-                                        <i className="icon-next" onClick={this.playNext}></i>
                                         <i className="icon-list" onClick={this.showMusicList}></i> */}
                                     </div>
                                 </div>
@@ -307,6 +313,7 @@ export default class Player extends Component {
                         </div>
                         {/* <MusicList musicList={this.props.musicList} show={this.state.modal} hash={this.props.match.params.id}
                                    changeShowModal={this.changeShowModal.bind(this)} {...this.props}/> */}
+                        <MusicList show={this.state.musicListShow} hideMusicList={this.hideMusicList.bind(this)}/>
                     </div>
                 )
             // }

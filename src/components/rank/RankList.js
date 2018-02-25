@@ -11,15 +11,16 @@ class ArtistSinger extends Component{
             imgurl:null,
             time:null,
             play:false
-        }
+        }   
+    }
+    handleClick(hash){
+        this.props.history.push("/play/"+hash)
     }
     componentDidMount(){
         this.props.rankListinfo(this.props.match.params.id);
-        console.log(this.props)
-        // RankList
     }
     render(){
-        console.log(this.props)
+        // console.log(this.props)
         const listInfo=this.props.RankList.listInfo || [];
         if(this.props.RankList.loaded){
             const localTime=(new Date(this.props.RankList.timestamp)).toString();
@@ -34,13 +35,15 @@ class ArtistSinger extends Component{
                         </div>
                         <ul className={ArtistSingerSty.ranklistBox}>
                             {
-                                listInfo.map((item,index) => (
-                                    <li key={index} className={ArtistSingerSty.ranklist}>
-                                        <em>{index+1}</em>
-                                        <p>{item.filename}</p>
-                                        <i>&#xe62d;</i>
-                                    </li>
-                                ))
+                                  listInfo.map((item,index) => (
+                                        <li key={index} 
+                                            className={ArtistSingerSty.ranklist}
+                                            onClick={this.handleClick.bind(this,item.hash)}>
+                                            <em>{index+1}</em>
+                                            <p>{item.filename}</p>
+                                            <i>&#xe62d;</i>
+                                        </li>
+                                    )) 
                             }
                             
                         </ul>

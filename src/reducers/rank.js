@@ -45,7 +45,8 @@ const albumDate=function(state=rankState.albumList,action){
             page:action.date.list.page,
             pagesize:action.date.list.pagesize,
             info:action.date.info.list,
-            listDate:[...state.listDate,action.date.list.list.info][0] 
+            listDate:action.date.list.list.info
+            // listDate:[...state.listDate,action.date.list.list.info][0] 
         })
         default:
             return state;
@@ -57,7 +58,8 @@ const rankDate=function(state=rankState.rank,action){
             return Object.assign({},state,{
                 loaded:true,
                 total:action.date.total,
-                items:[...state.items,action.date.list][0]  
+                items:action.date.list
+                // items:[...state.items,action.date.list][0]  
             })
         default:
             return state;
@@ -74,7 +76,8 @@ const rankListDate=function(state=rankState.rankList,action){
                 total:action.date.songs.total,
                 timestamp:action.date.songs.timestamp * 1000,
                 info:action.date.info,
-                listInfo:[...state.listInfo,action.date.songs.list][0] 
+                listInfo:action.date.songs.list
+                // listInfo:[...state.listInfo,action.date.songs.list][0] 
             })
         default:
             return state;
@@ -85,7 +88,8 @@ const artistDate=function(state=rankState.artist,action){
         case ARTISTDATA:
             return Object.assign({},state,{
                 loaded:true,
-                artists:[...state.artists,action.date][0] 
+                artists:action.date
+                // artists:[...state.artists,action.date][0] 
             })
         default:
             return state;
@@ -99,7 +103,8 @@ const artistListDate=function(state=rankState.artistList,action){
                 page:action.date.page,
                 pagesize:action.date.pageSize,
                 total:action.date.total,
-                listInfo:[...state.listInfo,action.date.list.info][0] 
+                listInfo:action.date.list.info
+                // listInfo:[...state.listInfo,action.date.list.info][0] 
             })
         default:
             return state;
