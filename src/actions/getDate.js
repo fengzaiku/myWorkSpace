@@ -4,7 +4,6 @@ import {combineReducers} from 'redux';
 import * as Type from '../utils/typeapi'
 import {parseLyric} from '../utils/tools'
 import Cheerio from 'cheerio'
-// import {}
 
 const RecommendList=(data) => {
     return {
@@ -96,6 +95,27 @@ const updateMusicProgress=(data) => {
         date:data
     }
 }
+const setSearchState=(data) => {
+    return {
+        type:Type.SEARCHSTATE,
+        date:data
+    }
+}
+const saveSearchHot=(data) => {
+    return {
+        type:Type.SAVESEARCH_HOT,
+        date:data
+    }
+}
+const SearchResultDate=(data) => {
+    return {
+        type:Type.SEARCHRESULTDATA,
+        date:data
+    }
+}
+
+
+
 
 
 const getMusicInfo=(id)=>{
@@ -115,7 +135,6 @@ const getMusicInfo=(id)=>{
             let res_lyrics_detail=await res_lyrics.text();
            
             let musicObj = {"song": res_song_json,"lyrics": parseLyric(res_lyrics_detail)};
-            console.log(musicObj)
             dispatch(addMusic(musicObj))
         } 
         catch (error) {
@@ -189,7 +208,6 @@ const getArtist=()=>{
 
             var user=await res.json();
 
-            console.log(user)
             dispatch(ArtistDate(user.list))
         } 
         catch (error) {
@@ -208,7 +226,6 @@ const getArtistList =(id)=>{
 
             let user = await res.json();
 
-            console.log(user)
             dispatch(ArtistListDate(user.singers))
         } 
         catch (error) {
@@ -252,8 +269,6 @@ const getListRankDate=(id)=>{
             }
 
             let user=await res.json();
-
-            console.log(user)
             dispatch(RankListDate(user))
         } 
         catch (error) {
@@ -273,7 +288,6 @@ const getAlbumDate=(id) => {
 
             let user= await res.json();
 
-            console.log(user)
             dispatch(AlbumDate(user))
         } 
         catch (error) {
@@ -281,28 +295,29 @@ const getAlbumDate=(id) => {
         }
     }
 }
-
-// const getSongList = () => {
-//     return (dispatch)=>{
-//         fetch(`/kugou/${API.new_song}`)
-//         .then(res => {
-//             if (res.status >= 400) {
-//                 throw new Error("Bad response from server");
-//             }
-//                 return res.json();
-//         })
-//         .then(user => {
-//             dispatch(RecommendDate(user.data))
-//             console.log(user);
-//             console.log(user.data);
-//         })
-//         .catch(err => {
-//             console.error(err);
-//         })
-//     }
-// };
-
-
+const fetchSearchHot = () => {
+    return async dispatch => {
+        try {
+            let result = await fetch(`/mobilecdn/${API.searchHot}?format=json`);
+            let resultData = await result.json();
+            dispatch(saveSearchHot(resultData));
+        } catch (err) {
+            console.log("Error", err);
+        }
+    }
+}
+const fetchSearchResult = (keyword, page = 1, pagesize = 20) => {
+    return async dispatch => {
+        try {
+            let result = await fetch(`/mobilecdn/${API.searchResult}?format=json&keyword=${keyword}&page=${page}&pagesize=${pagesize}`);
+            let user = await result.json();
+            dispatch(SearchResultDate(user.data))
+            // dispatch(saveSearchResult(resultData));
+        } catch (err) {
+            console.log("Error", err);
+        }
+    }
+};
 export {
     getBannerList,
     getSongList,
@@ -317,13 +332,11 @@ export {
     removeMusic,
     clearMusic,
     setCurMusicIndex,
-    updateMusicProgress
+    updateMusicProgress,
+    setSearchState,
+    fetchSearchHot,
+    fetchSearchResult
 }
-// export default combineReducers({
-//     getSearchHot,
-//     getSongList
-// })
-
 
 
 

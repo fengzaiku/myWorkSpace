@@ -14,7 +14,6 @@ class RecommentList extends Component {
     }
     render(){
         const recommendList=this.props.RecommendDate;
-        console.log(recommendList)
         const $this=this;
         if(recommendList.length){
             return (

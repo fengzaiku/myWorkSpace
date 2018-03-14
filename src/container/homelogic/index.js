@@ -1,4 +1,4 @@
-import {Route,withRouter,Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Home from '../../components/home/index'
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"

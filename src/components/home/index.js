@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Route,Redirect} from 'react-router-dom';
-import SearchHeader from './searchHeader'
+import SearchHeader from '../../container/homelogic/searchHeader'
 import NavHeader from './navHeader'
 import HomeSty from '../../assets/styleSheet/home/home'
 import {renderRoutes } from 'react-router-config'

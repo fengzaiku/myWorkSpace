@@ -14,6 +14,7 @@ const musicList=function(state=[],action){
                     hash[next.song.hash] = true;
                     item.push(next);
                 }
+
                 return item
             }, []);
             return newArr;

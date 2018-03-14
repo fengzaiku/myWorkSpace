@@ -61,6 +61,12 @@ const NewSongDate=(state=songList.items,action) => {
                     loaded:true,
                     date:action.date
            })
+        case Type.SEARCHRESULTDATA:
+            return Object.assign({},state,{
+                    page:1,
+                    loaded:true,
+                    date:action.date.info
+           })
         default:
             return state;
     }

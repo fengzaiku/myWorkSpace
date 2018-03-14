@@ -29,6 +29,8 @@ const RankList=Loadable({loader: () => import('../container/ranklogic/rankList')
 const Album=Loadable({loader: () => import('../container/album/album'),loading:Loading})
 const Play=Loadable({loader: () => import('../container/playlogic/play'),loading:Loading})
 const Login=Loadable({loader: () => import('../container/loginlogic/login'),loading:Loading})
+const SearchPage=Loadable({loader: () => import('../container/searchLogic/search'),loading:Loading})
+const SearchResult=Loadable({loader: () => import('../container/searchLogic/searchResult'),loading:Loading})
 
 // import Async from './asyncComponent'
 const routes = [
@@ -73,6 +75,15 @@ const routes = [
     {
       path:"/login",
       component:Login
+    },
+    {
+      path:"/search",
+      exact:true,
+      component:SearchPage
+    },
+    {
+      path:"/searchresult",
+      component:SearchResult
     }
   ]
 export default routes;
